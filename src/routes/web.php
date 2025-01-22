@@ -26,11 +26,8 @@ Route::get('/products/register', [ProductController::class, 'create'])->name('pr
 // 新規商品を保存
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 
-// 商品編集フォームを表示
-Route::get('/products/{productId}/update', [ProductController::class, 'edit'])->name('products.edit');
-
 // 商品を更新
-Route::put('/products/{productId}', [ProductController::class, 'update'])->name('products.update');
+Route::put('/products/{productId}/update', [ProductController::class, 'update'])->name('products.update');
 
 // 商品を検索
 Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');

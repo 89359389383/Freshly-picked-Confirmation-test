@@ -57,14 +57,6 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', '商品を登録しました');
     }
 
-    // 商品編集フォームを表示
-    public function edit($productId)
-    {
-        $product = Product::with('seasons')->findOrFail($productId);
-        $seasons = Season::all();
-        return view('products.edit', compact('product', 'seasons'));
-    }
-
     // 商品を更新
     public function update(ProductRequest $request, $productId)
     {
