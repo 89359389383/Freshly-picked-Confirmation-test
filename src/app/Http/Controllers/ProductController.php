@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Season;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -24,9 +25,10 @@ class ProductController extends Controller
         // 1. 商品ID ($productId) を使って、データベースからその商品を探します。
         // 2. 商品が見つからない場合は、自動的にエラー (404エラー) を出します。
         // 3. 商品に関連する季節情報 (seasons) も一緒に取得します。
+        $allSeasons = Season::all(); // すべての季節を取得
         $product = Product::with('seasons')->findOrFail($productId);
 
-        return view('products.show', compact('product'));
+        return view('products.show', compact('product', 'allSeasons'));
     }
 
     // 新規商品の登録フォームを表示
@@ -82,15 +84,40 @@ class ProductController extends Controller
         // 新しい季節のデータで古いデータを置き換える
         $product->seasons()->sync($request->input('seasons'));
 
-        return redirect()->route('products.index')->with('success', '商品を更新しました');
+        return redirect()->route('products.index');
     }
 
-    // 商品を検索
     public function search(Request $request)
     {
-        $query = $request->input('query');
-        $products = Product::where('name', 'like', "%$query%")->paginate(6);
-        return view('products.index', compact('products'));
+        // フォームから送られた検索条件を取得します。
+        $name = $request->input('name'); // 商品名
+
+        // デバッグ: リクエストの全データをログに記録
+        Log::info('検索リクエストデータ:', $request->all());
+
+        // データベースから情報を検索する準備をします。
+        $query = Product::with('seasons');
+        Log::info('初期クエリ構築完了');
+
+        // 商品名が入力されている場合
+        if ($name) {
+            $query->where('name', 'like', "%$name%");
+            Log::info('商品名で絞り込み:', ['query' => $query->toSql()]);
+        }
+
+        // 検索条件に合ったデータを1ページに6件ずつ取得します。
+        try {
+            /** @var \Illuminate\Contracts\Pagination\LengthAwarePaginator $products */
+            $products = $query->paginate(6);
+            Log::info('検索結果取得成功:', ['total' => $products->total()]);
+        } catch (\Exception $e) {
+            // デバッグ: エラー発生時に例外の情報をログ出力
+            Log::error('検索結果取得時のエラー:', ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            dd('検索中にエラーが発生しました: ' . $e->getMessage());
+        }
+
+        // 検索結果やフォームに入力された条件をビュー（HTML画面）に渡します。
+        return view('products.index', compact('products', 'name'));
     }
 
     // 商品を削除
@@ -98,6 +125,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($productId); // 商品IDを使って対象の商品を探す
         $product->delete(); // 見つけた商品をデータベースから削除する
-        return redirect()->route('products.index')->with('success', '商品を削除しました');
+        return redirect()->route('products.index');
     }
 }
