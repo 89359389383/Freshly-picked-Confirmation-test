@@ -11,7 +11,7 @@
 <body>
     <header class="header">
         <h1>商品一覧</h1>
-        <a href="{{ route('products.create') }}" class="add-cart-button">商品を追加</a>
+        <a href="{{ route('products.register') }}" class="add-cart-button">商品を追加</a>
     </header>
     <div class="container">
         <aside class="sidebar">

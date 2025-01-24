@@ -27,9 +27,10 @@ class ProductRequest extends FormRequest
             'name' => 'required|string|max:255',
             'price' => 'required|integer|min:0|max:10000',
             'description' => 'required|string|max:120',
-            'image' => 'required|mimes:png,jpeg',
-            'seasons' => 'required|array|min:1', // 季節を必須とし、複数選択対応
-            'seasons.*' => 'exists:seasons,id', // seasonsテーブルに存在するIDであることを確認
+            'image' => $this->isMethod('patch') ? 'nullable|mimes:png,jpeg' : 'required|mimes:png,jpeg',
+            // PATCH メソッドの場合は image フィールドを「nullable（省略可能）」にします
+            'seasons' => 'required|array|min:1',
+            'seasons.*' => 'exists:seasons,id',
         ];
     }
 
