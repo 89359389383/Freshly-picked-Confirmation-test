@@ -56,7 +56,7 @@ class ProductController extends Controller
         // 入力された季節（seasons）は配列で受け取り、それを紐付けます。
         $product->seasons()->attach($request->input('seasons'));
 
-        return redirect()->route('products.index')->with('success', '商品を登録しました');
+        return redirect()->route('products.index');
     }
 
     // 商品を更新

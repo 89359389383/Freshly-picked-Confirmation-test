@@ -37,7 +37,7 @@
 
                     <!-- エラー表示 -->
                     @error('image')
-                    <p class="error-message">{{ $message }}</p>
+                    <p class="error-message" style="color: red;">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
@@ -45,17 +45,17 @@
             <div class="form-section">
                 <div class="form-group">
                     <label class="form-label">商品名</label>
-                    <input type="text" name="name" class="form-input" value="{{ $product->name }}" required>
+                    <input type="text" name="name" class="form-input" value="{{ $product->name }}">
                     @error('name')
-                    <p class="error-message">{{ $message }}</p>
+                    <p class="error-message" style="color: red;">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">値段</label>
-                    <input type="number" name="price" class="form-input" value="{{ $product->price }}" required>
+                    <input type="number" name="price" class="form-input" value="{{ $product->price }}">
                     @error('price')
-                    <p class="error-message">{{ $message }}</p>
+                    <p class="error-message" style="color: red;">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -75,16 +75,16 @@
                     </div>
                     <!-- エラー表示 -->
                     @error('seasons')
-                    <p class="error-message">{{ $message }}</p>
+                    <p class="error-message" style="color: red;">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
 
             <div class="description">
                 <label class="form-label">商品説明</label>
-                <textarea name="description" class="description-area" required>{{ $product->description }}</textarea>
+                <textarea name="description" class="description-area">{{ $product->description }}</textarea>
                 @error('description')
-                <p class="error-message">{{ $message }}</p>
+                <p class="error-message" style="color: red;">{{ $message }}</p>
                 @enderror
             </div>
 
