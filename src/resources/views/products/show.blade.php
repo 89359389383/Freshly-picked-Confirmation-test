@@ -93,6 +93,12 @@
                 <button type="submit" class="btn btn-save">変更を保存</button>
             </div>
         </form>
+
+        <form method="POST" action="{{ route('products.destroy', $product->id) }}">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="delete-icon">🗑</button>
+        </form>
     </div>
 </body>
 

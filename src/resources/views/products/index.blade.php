@@ -17,16 +17,25 @@
         <aside class="sidebar">
             <div class="search-controls">
                 <!-- 検索フォーム -->
-                <form action="{{ route('products.search') }}" method="GET">
+                <form action="{{ route('products.index') }}" method="GET">
                     <input type="text" name="name" class="search-input" placeholder="商品名を入力" value="{{ request('name') }}">
                     <button type="submit" class="search-button">検索</button>
+
+                    <h4>価格順で表示</h4>
+                    <select name="sort" class="price-select" onchange="this.form.submit()">
+                        <option value="" disabled {{ is_null(request('sort')) ? 'selected' : '' }}>価格順で並び替え</option>
+                        <option value="asc" {{ request('sort') === 'asc' ? 'selected' : '' }}>価格が安い順</option>
+                        <option value="desc" {{ request('sort') === 'desc' ? 'selected' : '' }}>価格が高い順</option>
+                    </select>
                 </form>
-                <h4>価格順で表示</h4>
-                <select class="price-select">
-                    <option value="" disabled selected>価格順で並び替え</option>
-                    <option value="asc">価格が安い順</option>
-                    <option value="desc">価格が高い順</option>
-                </select>
+
+                <!-- 並び替えタグ -->
+                @if(request('sort'))
+                <div class="sort-tag">
+                    {{ request('sort') === 'asc' ? '安い順に表示' : '高い順に表示' }}
+                    <a href="{{ route('products.index', array_merge(request()->except('sort'))) }}" class="reset-sort">×</a>
+                </div>
+                @endif
             </div>
         </aside>
 

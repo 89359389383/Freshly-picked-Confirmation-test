@@ -11,10 +11,26 @@ use Illuminate\Support\Facades\Log;
 class ProductController extends Controller
 {
     // 商品一覧ページを表示
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('seasons')->paginate(6); // ページネーションで6件ずつ表示
-        return view('products.index', compact('products'));
+        // 並び替え条件を取得 (asc or desc)
+        $sort = $request->input('sort');
+
+        // クエリビルダを初期化
+        $query = Product::query();
+
+        // 並び替え条件がある場合、クエリに適用
+        if ($sort === 'asc') {
+            $query->orderBy('price', 'asc'); // 価格が安い順
+        } elseif ($sort === 'desc') {
+            $query->orderBy('price', 'desc'); // 価格が高い順
+        }
+
+        // 商品一覧を6件ずつ取得
+        $products = $query->paginate(6)->appends($request->query());
+
+        // 現在の並び替え条件をビューに渡す
+        return view('products.index', compact('products', 'sort'));
     }
 
     // 商品詳細ページを表示
