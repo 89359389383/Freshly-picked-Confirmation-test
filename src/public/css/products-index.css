@@ -25,13 +25,15 @@ body {
 .header {
     display: flex;
     align-items: center;
+    padding-left: 28px;
+    padding-right: 20px;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-top: 40px;
     width: 100%;
 }
 
-.header h1 {
-    font-size: 18px;
+.page-title {
+    font-size: 22px;
     margin: 0;
 }
 
@@ -41,7 +43,15 @@ body {
     gap: 10px;
 }
 
-.search-input,
+.search-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
 .search-button,
 .price-select {
     width: 100%;
@@ -55,12 +65,14 @@ body {
     background-color: #FFD700;
     border: none;
     cursor: pointer;
+    margin-bottom: 25px;
 }
 
 .price-select {
     width: 100%;
     padding: 8px;
-    margin-bottom: 15px;
+    margin-top: 16px;
+    margin-bottom: 16px;
     border: 1px solid #ddd;
     border-radius: 4px;
     color: #666;
@@ -69,7 +81,7 @@ body {
 .add-cart-button {
     padding: 10px 20px;
     background-color: #ff8c00;
-    color: white;
+    color: #666;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -89,7 +101,7 @@ body {
     background: white;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .product-image {
@@ -117,20 +129,39 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
-    gap: 10px;
+    gap: 8px;
 }
 
-.pagination span {
-    width: 30px;
-    height: 30px;
+.pagination-item {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    background-color: #fff;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.pagination span.active {
+.pagination-item:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination-item.active {
     background-color: #FFD700;
+    color: #fff;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.pagination-item.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: #f9f9f9;
 }

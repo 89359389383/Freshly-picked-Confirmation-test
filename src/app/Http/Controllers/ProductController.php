@@ -7,6 +7,7 @@ use App\Models\Season;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -84,8 +85,8 @@ class ProductController extends Controller
         // 新しい画像がアップロードされた場合
         if ($request->hasFile('image')) {
             // 古い画像を削除
-            if ($product->image && \Storage::disk('public')->exists($product->image)) {
-                \Storage::disk('public')->delete($product->image);
+            if ($product->image && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
             }
 
             // 新しい画像を保存し、パスを取得

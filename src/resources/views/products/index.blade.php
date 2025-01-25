@@ -8,17 +8,55 @@
     <link rel="stylesheet" href="{{ asset('css/products-index.css') }}">
 </head>
 
+<style>
+    .sort-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        background-color: rgba(255, 236, 153, 0.1);
+        border: 1px solid #FFEC99;
+        border-radius: 100px;
+        font-size: 14px;
+        color: #333333;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 16px;
+        /* 下に16pxの余白 */
+        position: relative;
+        /* 疑似要素の基準となる */
+    }
+
+    .sort-tag::after {
+        content: "";
+        /* 疑似要素を表示させる */
+        position: absolute;
+        bottom: -16px;
+        /* 要素の下16pxに配置 */
+        left: 50%;
+        /* 線を中央に配置 */
+        transform: translateX(-50%);
+        /* 中央寄せ */
+        width: 200px;
+        /* 線の幅 */
+        height: 1px;
+        /* 線の高さ */
+        background-color: #666;
+        /* 線の色 */
+    }
+</style>
+
 <body>
     <header class="header">
-        <h1>商品一覧</h1>
-        <a href="{{ route('products.register') }}" class="add-cart-button">商品を追加</a>
+        <h1 class="page-title">商品一覧</h1>
+        <a href="{{ route('products.register') }}" class="add-cart-button">+商品を追加</a>
     </header>
     <div class="container">
         <aside class="sidebar">
             <div class="search-controls">
                 <!-- 検索フォーム -->
                 <form action="{{ route('products.index') }}" method="GET">
-                    <input type="text" name="name" class="search-input" placeholder="商品名を入力" value="{{ request('name') }}">
+                    <input type="text" name="name" class="search-input" placeholder="商品名で検索" value="{{ request('name') }}">
                     <button type="submit" class="search-button">検索</button>
 
                     <h4>価格順で表示</h4>
@@ -60,7 +98,7 @@
 
             <!-- ページネーション -->
             <div class="pagination">
-                {{ $products->appends(request()->query())->links() }}
+                {{ $products->appends(request()->query())->links('vendor.pagination.default') }}
             </div>
         </main>
     </div>
