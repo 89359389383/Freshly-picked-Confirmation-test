@@ -23,15 +23,21 @@
 
             <div class="image-section">
                 <!-- 現在登録されている商品の画像を表示 -->
-                <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
+                <img
+                    src="{{ Str::startsWith($product->image, 'products/') ? asset('storage/' . $product->image) : asset('storage/products/' . $product->image) }}"
+                    alt="{{ $product->name }}"
+                    class="product-image">
 
                 <div class="file-input-container">
+                    <label for="product-image">画像を選択:</label>
                     <input type="file" name="image" id="product-image">
 
                     <!-- ファイル名を表示 -->
                     <span class="file-name">
                         @if($product->image)
                         {{ $product->image }}
+                        @else
+                        ファイルが選択されていません
                         @endif
                     </span>
 
@@ -100,6 +106,28 @@
             <button type="submit" class="delete-icon">🗑</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('product-image').addEventListener('change', function(event) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            if (file) {
+                reader.onload = function(e) {
+                    // プレビュー画像を更新
+                    const previewImage = document.querySelector('.product-image');
+                    previewImage.src = e.target.result;
+
+                    // ファイル名を更新
+                    const fileNameSpan = document.querySelector('.file-name');
+                    fileNameSpan.textContent = file.name;
+                };
+
+                reader.readAsDataURL(file); // ファイルを Data URL に変換してプレビュー表示
+            }
+        });
+    </script>
 </body>
 
 </html>

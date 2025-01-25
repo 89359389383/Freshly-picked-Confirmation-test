@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label class="required">商品画像</label>
                 <div class="image-preview">
-                    <img id="image-preview" src="{{ asset('images/default-placeholder.png') }}" alt="商品画像プレビュー">
+                    <img id="image-preview" src="{{ asset('images/default-placeholder.png') }}">
                 </div>
                 <div class="file-upload">
                     <input type="file" name="image" id="image-input">

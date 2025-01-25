@@ -45,7 +45,10 @@
                 @foreach ($products as $product)
                 <div class="product-card">
                     <a href="{{ route('products.show', $product->id) }}">
-                        <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
+                        <img
+                            src="{{ Str::startsWith($product->image, 'products/') ? asset('storage/' . $product->image) : asset('storage/products/' . $product->image) }}"
+                            alt="{{ $product->name }}"
+                            class="product-image">
                         <div class="product-info">
                             <span class="product-name">{{ $product->name }}</span>
                             <span class="product-price">¥{{ number_format($product->price) }}</span>

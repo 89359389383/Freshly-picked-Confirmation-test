@@ -78,28 +78,33 @@ class ProductController extends Controller
     // 商品を更新
     public function update(ProductRequest $request, $productId)
     {
-        // 商品IDを使ってデータベースから対象の商品を探す
-        // 商品が見つからない場合はエラーを出す
+        // 商品を取得
         $product = Product::findOrFail($productId);
 
-        // リクエストに画像ファイルがあるか確認する
-        // 画像ファイルがある場合は保存して、そのパスを取得する
-        // 画像ファイルがない場合は、既存の商品画像パスをそのまま使う
-        $path = $request->file('image')
-            ? $request->file('image')->store('products', 'public') // 新しい画像を保存
-            : $product->image; // 既存の画像を使う
+        // 新しい画像がアップロードされた場合
+        if ($request->hasFile('image')) {
+            // 古い画像を削除
+            if ($product->image && \Storage::disk('public')->exists($product->image)) {
+                \Storage::disk('public')->delete($product->image);
+            }
 
-        // 商品データを更新する
-        // 名前、価格、説明はリクエストから取得し、画像のパスも含めて更新する
+            // 新しい画像を保存し、パスを取得
+            $path = $request->file('image')->store('products', 'public');
+        } else {
+            // 画像がアップロードされていない場合、既存の画像を使用
+            $path = $product->image;
+        }
+
+        // 商品情報を更新
         $product->update(array_merge(
-            $request->only(['name', 'price', 'description']), // 入力データ（名前、価格、説明）を取得
-            ['image' => $path] // 画像パスを設定
+            $request->only(['name', 'price', 'description']),
+            ['image' => $path] // 画像パスを更新
         ));
 
-        // 商品に関連付けられている季節の情報を更新する
-        // 新しい季節のデータで古いデータを置き換える
+        // 季節データを更新
         $product->seasons()->sync($request->input('seasons'));
 
+        // 商品一覧ページにリダイレクト
         return redirect()->route('products.index');
     }
 
