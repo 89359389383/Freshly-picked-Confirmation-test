@@ -25,7 +25,7 @@
             <!-- 価格 -->
             <div class="form-group">
                 <label class="required">価格</label>
-                <input type="number" name="price" placeholder="価格を入力 (例: 800)" value="{{ old('price') }}">
+                <input type="number" name="price" placeholder="価格を入力 " value="{{ old('price') }}">
                 @error('price')
                 <p class="error-message" style="color: red;">{{ $message }}</p>
                 @enderror
@@ -47,7 +47,11 @@
 
             <!-- 季節 -->
             <div class="form-group">
-                <label class="required">季節 <span class="sub-label">複数選択可能</span></label>
+                <label class="season-name">
+                    季節
+                    <span class="required-badge"></span>
+                    <span class="sub-label">複数選択可</span>
+                </label>
                 <div class="checkbox-group">
                     @foreach ($seasons as $season)
                     <label class="checkbox-option">
@@ -64,7 +68,7 @@
             <!-- 商品説明 -->
             <div class="form-group">
                 <label class="required">商品説明</label>
-                <textarea name="description" placeholder="商品説明を入力してください">{{ old('description') }}</textarea>
+                <textarea name="description" placeholder="商品の説明を入力">{{ old('description') }}</textarea>
                 @error('description')
                 <p class="error-message" style="color: red;">{{ $message }}</p>
                 @enderror

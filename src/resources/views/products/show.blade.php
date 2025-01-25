@@ -13,6 +13,7 @@
 <body>
     <div class="container">
         <div class="logo">mogitate</div>
+
         <div class="breadcrumb">
             <a href="{{ route('products.index') }}">商品一覧</a> > {{ $product->name }}
         </div>
@@ -97,13 +98,14 @@
             <div class="button-group">
                 <a href="{{ route('products.index') }}" class="btn btn-back">戻る</a>
                 <button type="submit" class="btn btn-save">変更を保存</button>
-            </div>
-        </form>
 
-        <form method="POST" action="{{ route('products.destroy', $product->id) }}">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="delete-icon">🗑</button>
+                <!-- 削除アイコン -->
+                <form method="POST" action="{{ route('products.destroy', $product->id) }}" class="delete-form">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="delete-icon">🗑</button>
+                </form>
+            </div>
         </form>
     </div>
 
