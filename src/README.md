@@ -18,10 +18,11 @@
 4.  php artisan key:generate
 5.  php artisan migrate
 6.  php artisan db:seed
+7.  php artisan storage:link
 
 ## 使用技術
 
--   PHP: 7.4.9
+-   PHP: 8.4.1
 -   Laravel: 8.83.8
 -   MySQL: 8.0.26
 
