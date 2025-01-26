@@ -14,24 +14,26 @@ class ProductController extends Controller
     // 商品一覧ページを表示
     public function index(Request $request)
     {
-        // 並び替え条件を取得 (asc or desc)
+        $name = $request->input('name');
         $sort = $request->input('sort');
 
-        // クエリビルダを初期化
-        $query = Product::query();
+        $query = Product::with('seasons');
 
-        // 並び替え条件がある場合、クエリに適用
-        if ($sort === 'asc') {
-            $query->orderBy('price', 'asc'); // 価格が安い順
-        } elseif ($sort === 'desc') {
-            $query->orderBy('price', 'desc'); // 価格が高い順
+        // 検索条件を追加
+        if ($name) {
+            $query->where('name', 'like', "%$name%");
         }
 
-        // 商品一覧を6件ずつ取得
+        // 並び替え条件を追加
+        if ($sort === 'asc') {
+            $query->orderBy('price', 'asc');
+        } elseif ($sort === 'desc') {
+            $query->orderBy('price', 'desc');
+        }
+
         $products = $query->paginate(6)->appends($request->query());
 
-        // 現在の並び替え条件をビューに渡す
-        return view('products.index', compact('products', 'sort'));
+        return view('products.index', compact('products', 'name', 'sort'));
     }
 
     // 商品詳細ページを表示
@@ -111,35 +113,26 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        // フォームから送られた検索条件を取得します。
-        $name = $request->input('name'); // 商品名
+        $name = $request->input('name');
+        $sort = $request->input('sort');
 
-        // デバッグ: リクエストの全データをログに記録
-        Log::info('検索リクエストデータ:', $request->all());
-
-        // データベースから情報を検索する準備をします。
         $query = Product::with('seasons');
-        Log::info('初期クエリ構築完了');
 
-        // 商品名が入力されている場合
+        // 検索条件を追加
         if ($name) {
             $query->where('name', 'like', "%$name%");
-            Log::info('商品名で絞り込み:', ['query' => $query->toSql()]);
         }
 
-        // 検索条件に合ったデータを1ページに6件ずつ取得します。
-        try {
-            /** @var \Illuminate\Contracts\Pagination\LengthAwarePaginator $products */
-            $products = $query->paginate(6);
-            Log::info('検索結果取得成功:', ['total' => $products->total()]);
-        } catch (\Exception $e) {
-            // デバッグ: エラー発生時に例外の情報をログ出力
-            Log::error('検索結果取得時のエラー:', ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
-            dd('検索中にエラーが発生しました: ' . $e->getMessage());
+        // 並び替え条件を追加
+        if ($sort === 'asc') {
+            $query->orderBy('price', 'asc');
+        } elseif ($sort === 'desc') {
+            $query->orderBy('price', 'desc');
         }
 
-        // 検索結果やフォームに入力された条件をビュー（HTML画面）に渡します。
-        return view('products.index', compact('products', 'name'));
+        $products = $query->paginate(6)->appends($request->query());
+
+        return view('products.index', compact('products', 'name', 'sort'));
     }
 
     // 商品を削除

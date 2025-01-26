@@ -54,11 +54,12 @@
     <div class="container">
         <aside class="sidebar">
             <div class="search-controls">
-                <!-- 検索フォーム -->
-                <form action="{{ route('products.index') }}" method="GET">
+                <form action="{{ route('products.search') }}" method="GET" class="search-form">
                     <input type="text" name="name" class="search-input" placeholder="商品名で検索" value="{{ request('name') }}">
                     <button type="submit" class="search-button">検索</button>
+                </form>
 
+                <form action="{{ route('products.index') }}" method="GET" class="sort-form">
                     <h4>価格順で表示</h4>
                     <select name="sort" class="price-select" onchange="this.form.submit()">
                         <option value="" disabled {{ is_null(request('sort')) ? 'selected' : '' }}>価格順で並び替え</option>
