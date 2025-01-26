@@ -12,8 +12,6 @@
 
 <body>
     <div class="container">
-        <div class="logo">mogitate</div>
-
         <div class="breadcrumb">
             <a href="{{ route('products.index') }}">商品一覧</a> > {{ $product->name }}
         </div>
