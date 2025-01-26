@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
 {
+
+    const MAX_PRICE = 10000;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,7 +27,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'price' => 'required|integer|min:0|max:10000',
+            'price' => 'required|integer|min:0|max:' . self::MAX_PRICE,
             'description' => 'required|string|max:120',
             'image' => $this->isMethod('patch') ? 'nullable|mimes:png,jpeg' : 'required|mimes:png,jpeg',
             // PATCH メソッドの場合は image フィールドを「nullable（省略可能）」にします
