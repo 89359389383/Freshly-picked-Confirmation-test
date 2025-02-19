@@ -24,8 +24,9 @@ body {
 
 .header {
     display: flex;
+    max-width: 1200px;
     align-items: center;
-    padding-left: 28px;
+    padding-left: 20px;
     padding-right: 20px;
     justify-content: space-between;
     margin-top: 40px;
@@ -164,4 +165,97 @@ body {
     cursor: not-allowed;
     pointer-events: none;
     background-color: #f9f9f9;
+}
+
+/* ここまでが既存のCSS(デスクトップ向け) */
+
+/* ここまでが既存のCSS(デスクトップ向け) */
+
+@media screen and (max-width: 1100px) {
+    /* タブレット対応 */
+
+    /* コンテナ全体を縦並びにし、横幅が狭い画面でも見やすくする */
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* サイドバーを100%幅にし下に配置 */
+    .sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    /* メインコンテンツの幅を100%に */
+    .main-content {
+        width: 100%;
+    }
+
+    /* 商品グリッドを2カラム表示に変更 */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* タブレットでのヘッダーの余白・間隔調整例 */
+    .header {
+        flex-wrap: wrap;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    /* フォームなどの要素をタブレット向けに微調整したい場合 */
+    .search-input,
+    .search-button,
+    .price-select {
+        font-size: 14px;
+        padding: 8px;
+        width: 100%;
+    }
+
+    /* ボタンなどの大きさ調整 */
+    .add-cart-button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* スマホ対応 */
+
+    /* 更に画面が狭いので、商品グリッドを1カラム表示に */
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* ヘッダー内のタイトルサイズなどを少し調整(必要に応じて) */
+    .page-title {
+        font-size: 18px;
+    }
+
+    /* 検索フォームなども更に狭い幅に対応 */
+    .search-input,
+    .search-button,
+    .price-select {
+        font-size: 13px;
+        padding: 6px;
+    }
+
+    /* ボタンなどの大きさ調整例 */
+    .add-cart-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    /* サイドバーも上部に配置されるため幅を100%に */
+    .sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+        /* 必要に応じて調整 */
+    }
+
+    /* コンテナ内の要素を縦並びに */
+    .container {
+        flex-direction: column;
+        padding: 10px;
+    }
 }

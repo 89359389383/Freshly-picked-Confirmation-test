@@ -26,8 +26,9 @@
             <div class="form-group">
                 <label class="required">価格</label>
                 <input type="number" name="price" placeholder="価格を入力 " value="{{ old('price') }}">
+
                 @error('price')
-                <p class="error-message" style="color: red;">{{ $message }}</p>
+                <p class="error-message" style="color: red;">{!! nl2br(e($message)) !!}</p>
                 @enderror
             </div>
 

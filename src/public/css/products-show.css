@@ -11,6 +11,9 @@ body {
 
 .breadcrumb {
     color: #0099ff;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
     font-size: 14px;
     margin-bottom: 20px;
 }
@@ -18,7 +21,6 @@ body {
 .breadcrumb a {
     color: #0099ff;
     text-decoration: none;
-    margin-left: 122px;
 }
 
 .container {

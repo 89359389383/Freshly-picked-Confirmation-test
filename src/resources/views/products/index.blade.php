@@ -44,6 +44,17 @@
         background-color: #666;
         /* 線の色 */
     }
+
+    .header {
+        display: flex;
+        max-width: 1200px;
+        margin: 0 auto;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        justify-content: space-between;
+        margin-top: 40px;
+    }
 </style>
 
 <body>
